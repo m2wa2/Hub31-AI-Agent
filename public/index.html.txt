@@ -3,126 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Hub31 AI Agent</title>
+    <title>Hub31 - AI Solutions Partner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Previous styles remain unchanged */
-        .warning {
-            color: #ff4444;
-            font-size: 0.9em;
+        /* ===== Base Styles ===== */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #0f172a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--light) 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* ===== Layout Styles ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
             text-align: center;
-            margin: 15px 0;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .logo {
+            width: 180px;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        /* ===== Chat Interface ===== */
+        .chat-container {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .chat-messages {
+            height: 500px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        .message {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 1rem;
+            max-width: 80%;
+            animation: slideIn 0.3s ease;
+        }
+
+        .user-message {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        .bot-message {
+            background: white;
+            border: 1px solid #e2e8f0;
+            margin-right: auto;
+            border-bottom-left-radius: 0.25rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        /* ===== Input Area ===== */
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem 1.25rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .send-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Mobile Responsive ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .chat-messages {
+                height: 60vh;
+            }
+
+            .message {
+                max-width: 90%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Previous HTML structure remains the same -->
+    <div class="container">
+        <header class="header">
+            <img src="8.png" alt="Hub31 Logo" class="logo">
+            <h1>Dare to be a Force of Nature</h1>
+        </header>
+
+        <main class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    🚀 Welcome to Hub31 AI Assistant! How can I help you today?
+                    <div class="timestamp">Just now</div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" 
+                       class="chat-input" 
+                       id="userInput"
+                       placeholder="Ask me about our services, pricing, or expertise...">
+                <button class="send-btn" onclick="handleUserInput()">
+                    <i class="fas fa-paper-plane"></i>
+                    Send
+                </button>
+            </div>
+        </main>
+
+        <div class="cta-section" style="text-align: center; margin-top: 2rem;">
+            <a href="https://wa.me/254720860034" 
+               class="whatsapp-btn"
+               style="background: #25D366; color: white; padding: 1rem 2rem; border-radius: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;"
+               target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                Chat Directly on WhatsApp
+            </a>
+        </div>
+    </div>
 
     <script>
-        const HUGGING_FACE_API_KEY = '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';
-        const COMPANY_CONTEXT = `Hub31 is a Kenyan tech agency specializing in:
-        - Services: Web/Mobile apps, UI/UX, SEO, White Label Solutions
-        - Industries: Healthcare, E-commerce, Education (10+ sectors)
-        - Models: Fixed Cost, Dedicated Teams, Hourly Contracts
-        - Differentiators: 24hr delivery, 40% cost savings, Kenyan-based
-        Contact: WhatsApp +254720860034 | Nairobi HQ`;
-
-        async function generateResponse(prompt) {
-            try {
-                const response = await fetch(
-                    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2",
-                    {
-                        headers: { 
-                            Authorization: `Bearer ${HUGGING_FACE_API_KEY}`,
-                            "Content-Type": "application/json"
-                        },
-                        method: "POST",
-                        body: JSON.stringify({
-                            inputs: `<s>[INST]As Hub31 AI, answer using: ${COMPANY_CONTEXT}[/INST]
-                            [INST]User: ${prompt}[/INST]
-                            Hub31 AI:`,
-                            parameters: {
-                                max_new_tokens: 300,
-                                temperature: 0.5,
-                                repetition_penalty: 1.1
-                            }
-                        }),
-                    }
-                );
-                
-                const result = await response.json();
-                return result[0]?.generated_text || "Let me connect you to our team via WhatsApp for this.";
-            } catch (error) {
-                console.error('API Error:', error);
-                return "Please contact us directly via WhatsApp for immediate assistance 📱";
-            }
-        }
-
-        // Modified handleUserInput with enhanced logic
-        async function handleUserInput() {
+        // Simple Chat Logic
+        const chatMessages = document.getElementById('chatMessages');
+        
+        function handleUserInput() {
             const input = document.getElementById('userInput').value.trim();
             if (!input) return;
 
-            const chatMessages = document.getElementById('chatMessages');
-            
             // Add user message
-            chatMessages.innerHTML += `<div class="message user-message">
-                ${input}
-                <span class="timestamp">${getTime()}</span>
-            </div>`;
-
-            // Show loading
-            const loadingId = Date.now();
-            chatMessages.innerHTML += `<div class="message bot-message" id="${loadingId}">
-                <div class="loading"></div>
-                <span class="timestamp">${getTime()}</span>
-            </div>`;
+            addMessage(input, 'user');
             
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            // Simulate bot response
+            setTimeout(() => {
+                addMessage("Thank you for your message! Our team will respond shortly.", 'bot');
+            }, 1000);
 
-            // Generate response
-            let response;
-            if(isBasicQuery(input)) {
-                response = getPredefinedResponse(input);
-            } else {
-                response = await generateResponse(input);
-                if(!validateResponse(response)) {
-                    response = "For detailed answers, please contact us via WhatsApp directly.";
-                }
-            }
-
-            // Update UI
-            document.getElementById(loadingId).outerHTML = `
-                <div class="message bot-message">
-                    ${formatResponse(response)}
-                    ${addFallbackOption(input)}
-                    <span class="timestamp">${getTime()}</span>
-                </div>
-            `;
-
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            // Clear input
             document.getElementById('userInput').value = '';
         }
 
-        // Enhanced validation
-        function validateResponse(text) {
-            const forbiddenTerms = ['sorry', 'unable', 'cannot', 'don\'t know'];
-            return !forbiddenTerms.some(term => text.toLowerCase().includes(term));
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.innerHTML = `
+                ${text}
+                <div class="timestamp">${new Date().toLocaleTimeString()}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        function addFallbackOption(input) {
-            return `<div class="warning" style="margin-top:10px;">
-                Not satisfied? 
-                <a href="https://wa.me/254720860034?text=${encodeURIComponent(input)}" target="_blank">
-                    Chat with human expert →
-                </a>
-            </div>`;
-        }
-
-        // Rest of previous JavaScript remains
+        // Handle Enter key
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') handleUserInput();
+        });
     </script>
-    
-    <div class="warning">
-        Note: This is a demo version. Always secure API keys in production systems.
-    </div>
 </body>
 </html>
